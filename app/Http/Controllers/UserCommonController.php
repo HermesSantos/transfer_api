@@ -3,25 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Models\CommonUser;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class UserCommonController extends Controller
 {
     public function CreateCommonUser(Request $request): JsonResponse
     {
-        $data = $request->all();
-        $user = new CommonUser;
-        $user->name = $data['name'];
-        $user->email = $data['email'];
-        $user->cpf = $data['cpf'];
-        $user->password = $data['password'];
-        $user->role = 1;
-        $user->wallet_id = Str::random(10);
-        $user->save();
-        return response()->json($user);
+        try {
+            $data = $request->all();
+            $user = new CommonUser;
+            $user->name = $data['name'];
+            $user->email = $data['email'];
+            $user->cpf = $data['cpf'];
+            $user->password = Hash::make($data['password']);
+            $user->role = 1;
+            $user->wallet_id = Str::random(10);
+            $user->save();
+            return response()->json('User created!', 200);
+        } catch (Exception $e) {
+            return response()->json($e->errorInfo[1] == 1062 ? 'User already exists' : $e, 500);
+        }
     }
 
     public function GetAllCommonUsers(): JsonResponse
