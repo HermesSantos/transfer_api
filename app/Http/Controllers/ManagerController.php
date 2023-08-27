@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Helper;
 use App\Models\Manager;
 use Exception;
 use Illuminate\Http\Request;
@@ -20,8 +21,12 @@ class ManagerController extends Controller
             $manager->email = $data['email'];
             $manager->password = Hash::make($data['password']);
             $manager->cpf = $data['cpf'];
-            $manager->wallet_id = Str::random(10);
+            $manager->wallet_code = Str::random(10);
             $manager->role = 2;
+
+            Helper::CreateWallet($manager->id, $manager->role, $manager->wallet_code);
+
+
             $manager->save();
             return response()->json('Manager created successfully', 200);
         } catch (Exception $e) {

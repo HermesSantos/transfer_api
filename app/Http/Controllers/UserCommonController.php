@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Helper;
 use App\Models\CommonUser;
+use App\Models\Wallet;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use PhpParser\Node\Expr\Cast\Bool_;
 
 class UserCommonController extends Controller
 {
@@ -22,8 +25,11 @@ class UserCommonController extends Controller
             $user->cpf = $data['cpf'];
             $user->password = Hash::make($data['password']);
             $user->role = 1;
-            $user->wallet_id = Str::random(10);
+            $user->wallet_code = Str::random(10);
             $user->save();
+
+            Helper::CreateWallet($user->id, $user->role, $user->wallet_code);
+
             return response()->json('User created!', 200);
         } catch (Exception $e) {
             return response()->json($e->errorInfo[1] == 1062 ? 'User already exists' : $e, 500);
