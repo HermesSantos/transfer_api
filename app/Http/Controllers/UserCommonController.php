@@ -43,14 +43,14 @@ class UserCommonController extends Controller
         if (isset($user)) {
             return response()->json($user);
         } else {
-            return response()->json('Not found', 404);
+            return response()->json(404);
         }
     }
 
     public function DeleteCommonUser(Request $request): JsonResponse
     {
         $user = $this->GetCommonUserById($request);
-        if (isset($user)) {
+        if ($user->original != 404) {
             DB::table('common_users')->where('id', $user->original->id)->delete();
             return response()->json('Deleted successfuly', 200);
         } else {
