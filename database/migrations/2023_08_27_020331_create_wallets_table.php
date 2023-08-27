@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('wallets', function (Blueprint $table) {
             $table->id();
-            $table->integer('manager_id')->nullable();
-            $table->integer('user_id')->nullable();
+            $table->unsignedBigInteger('manager_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->integer('balance')->default(0);
             $table->timestamps();
 
