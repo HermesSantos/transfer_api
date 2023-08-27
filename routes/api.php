@@ -23,6 +23,7 @@ Route::prefix('user')->group(function () {
     Route::post('/get-user-by-id', [UserCommonController::class, 'GetCommonUserById']);
     Route::post('/delete-user', [UserCommonController::class, 'DeleteCommonUser']);
     Route::post('/add-balance', [ManageWalletAccount::class, 'UserAddBalance']);
+    Route::post('/transfer', [ManageWalletAccount::class, 'UserTransfer']);
 });
 Route::prefix('manager')->group(function () {
     Route::get('/get-managers', [ManagerController::class, 'GetAllManagers']);
