@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class CommonUser extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'user_id'
+    ];
 }
