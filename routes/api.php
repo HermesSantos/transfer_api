@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\UserCommonController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,4 +20,9 @@ Route::prefix('user')->group(function () {
     Route::post('/create', [UserCommonController::class, 'CreateCommonUser']);
     Route::get('/get-users', [UserCommonController::class, 'GetAllCommonUsers']);
     Route::post('/get-user-by-id', [UserCommonController::class, 'GetCommonUserById']);
+    Route::post('/delete-user', [UserCommonController::class, 'DeleteCommonUser']);
+});
+Route::prefix('manager')->group(function () {
+    Route::get('/get-managers', [ManagerController::class, 'GetAllManagers']);
+    Route::post('/create', [ManagerController::class, 'CreateManager']);
 });
