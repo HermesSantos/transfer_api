@@ -28,7 +28,7 @@ class ManagerController extends Controller
             return response()->json($e->errorInfo[1] == 1062 ? 'Manager already exists' : $e, 500);
         }
     }
-    public function GetAllManagers(Request $request)
+    public function GetAllManagers()
     {
         $managers = DB::table('managers')->get();
         return response()->json($managers);
