@@ -35,12 +35,5 @@ class ManagerController extends Controller
     }
     public function GetManagerById(Request $request)
     {
-        $data = $request->all();
-        $manager = DB::table('managers')->where('id', $data['id'])->get();
-        if (isset($manager)) {
-            return response()->json($manager);
-        } else {
-            return response()->json('Not found', 404);
-        }
     }
 }
