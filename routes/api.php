@@ -28,4 +28,5 @@ Route::prefix('manager')->group(function () {
     Route::get('/get-managers', [ManagerController::class, 'GetAllManagers']);
     Route::post('/create', [ManagerController::class, 'CreateManager']);
     Route::get('/get-manager-by-id', [ManagerController::class, 'GetManagerById']);
+    Route::post('/add-balance', [ManageWalletAccount::class, 'ManagerAddBalance']);
 });

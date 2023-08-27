@@ -14,4 +14,10 @@ class ManageWalletAccount extends Controller
         $balance = DB::table('wallets')->where('user_id', $data['id'])->update(['balance' => $data['balance']]);
         if ($balance) return response()->json('Balance was updated successfully', 200);
     }
+    public function ManagerAddBalance(Request $request)
+    {
+        $data = $request->all();
+        $balance = DB::table('wallets')->where('manager_id', $data['id'])->update(['balance' => $data['balance']]);
+        if ($balance) return response()->json('Balance was updated successfully', 200);
+    }
 }
