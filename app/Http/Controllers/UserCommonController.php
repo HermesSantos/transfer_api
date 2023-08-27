@@ -28,11 +28,14 @@ class UserCommonController extends Controller
             $user->wallet_code = Str::random(10);
             $user->save();
 
-            Helper::CreateWallet($user->id, $user->role, $user->wallet_code);
-
-            return response()->json('User created!', 200);
+            $helper_response = Helper::CreateWallet($user->id, $user->role, $user->wallet_code);
+            if ($helper_response == true) {
+                return response()->json('User created!', 200);
+            } else {
+                return response()->json('Erro when wallet id was created, please contact support so you can make transactions');
+            }
         } catch (Exception $e) {
-            return response()->json($e->errorInfo[1] == 1062 ? 'User already exists' : $e, 500);
+            return response()->json($e->getMessage(), 500);
         }
     }
 

@@ -23,14 +23,16 @@ class ManagerController extends Controller
             $manager->cpf = $data['cpf'];
             $manager->wallet_code = Str::random(10);
             $manager->role = 2;
-
-            Helper::CreateWallet($manager->id, $manager->role, $manager->wallet_code);
-
-
             $manager->save();
-            return response()->json('Manager created successfully', 200);
+
+            $wallet_created = Helper::CreateWallet($manager->id, $manager->role, $manager->wallet_code);
+            if ($wallet_created == true) {
+                return response()->json('Manager created successfully', 200);
+            } else {
+                return response()->json('Erro when wallet id was created, please contact support so you can make transactions');
+            }
         } catch (Exception $e) {
-            return response()->json($e->errorInfo[1] == 1062 ? 'Manager already exists' : $e, 500);
+            return response()->json($e->getMessage(), 500);
         }
     }
     public function GetAllManagers()
