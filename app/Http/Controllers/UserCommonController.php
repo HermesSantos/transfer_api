@@ -4,14 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Helper;
 use App\Models\CommonUser;
-use App\Models\Wallet;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use PhpParser\Node\Expr\Cast\Bool_;
 
 class UserCommonController extends Controller
 {

@@ -17,6 +17,8 @@ Route::prefix('user')->group(function () {
     Route::post('/add-balance', [ManageWalletAccount::class, 'UserAddBalance']);
     Route::post('/transfer', [ManageWalletAccount::class, 'UserTransfer']);
     Route::get('/get-balance', [ManageWalletAccount::class, 'UserGetBalance']);
+    // Get Wallet Code
+    Route::get('/get-wallet-code', [ManageWalletAccount::class, 'UserGetWalletCode']);
 });
 
 Route::prefix('manager')->group(function () {
