@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ManageManagerWalletAccount;
 use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\ManageWalletAccount;
 use App\Http\Controllers\UserCommonController;
@@ -24,6 +25,5 @@ Route::prefix('manager')->group(function () {
     Route::post('/create', [ManagerController::class, 'CreateManager']);
     Route::get('/get-manager-by-id', [ManagerController::class, 'GetManagerById']);
     // Manage Balance
-    Route::get('/get-balance', [ManageWalletAccount::class, 'VerifyBalance']);
-    // Route::post('/add-balance', [ManageWalletAccount::class, 'ManageAddBalance']);
+    Route::get('/get-balance', [ManageManagerWalletAccount::class, 'ManagerGetBalance']);
 });
