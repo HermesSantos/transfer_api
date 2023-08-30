@@ -24,17 +24,17 @@ class ManageWalletAccount extends Controller
     public function UserTransfer(Request $request)
     {
         $data = $request->all();
-        $has_balance = $this->UserVerifyBalance($data['owner_id'], self::$user_role);
+        $has_balance = $this->UserVerifyBalance($data['owner_wallet_code']);
         if ($has_balance) {
             // subtract from wallet owner
-            $balance = DB::table('wallets')->where('user_id', $data['owner_id'])->select('balance')->first();
+            $balance = DB::table('wallets')->where('wallet_code', $data['owner_wallet_code'])->select('balance')->first();
             $new_owner_balance = $balance->balance - $data['amount'];
             if ($new_owner_balance < 0) {
                 return response()->json('Transfer amount need to be less or equal of your amount value', 401);
             } else {
                 $receiver_balance = DB::table('wallets')->where('wallet_code', $data['receiver_wallet_code'])->first();
                 $new_receiver_balance = $data['amount'] + $receiver_balance->balance;
-                DB::table('wallets')->where('user_id', $data['owner_id'])->update(['balance' => $new_owner_balance]);
+                DB::table('wallets')->where('wallet_code', $data['owner_wallet_code'])->update(['balance' => $new_owner_balance]);
                 DB::table('wallets')->where('wallet_code', $data['receiver_wallet_code'])->update(['balance' => $new_receiver_balance]);
                 return response()->json(200);
             }
@@ -46,16 +46,10 @@ class ManageWalletAccount extends Controller
         return response()->json($balance);
     }
     
-    private function UserVerifyBalance($id, $role): bool
+    private function UserVerifyBalance($wallet_code): bool
     {
-        if ($role == 1) {
-            $balance = DB::table('wallets')->where('user_id', $id)->select('balance')->first();
-            if ($balance->balance > 0) return true;
-            return false;
-        } else {
-            $balance = DB::table('wallets')->where('user_id', $id)->select('balance')->first();
-            if ($balance->balance > 0) return true;
-            return false;
-        }
+        $balance = DB::table('wallets')->where('wallet_code', $wallet_code)->select('balance')->first();
+        if ($balance->balance > 0) return true;
+        return false;
     }
 }
