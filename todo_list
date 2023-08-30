@@ -1,0 +1,4 @@
+add softdeletes
+add middleware to verify if user/manager cpf or email already exists
+delete wallets with cascade
+add route to see its wallet_id (giving his password)
