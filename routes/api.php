@@ -15,6 +15,7 @@ Route::prefix('user')->group(function () {
     // Manage Balance
     Route::post('/add-balance', [ManageWalletAccount::class, 'UserAddBalance']);
     Route::post('/transfer', [ManageWalletAccount::class, 'UserTransfer']);
+    Route::get('/get-balance', [ManageWalletAccount::class, 'UserGetBalance']);
 });
 
 Route::prefix('manager')->group(function () {
@@ -23,5 +24,6 @@ Route::prefix('manager')->group(function () {
     Route::post('/create', [ManagerController::class, 'CreateManager']);
     Route::get('/get-manager-by-id', [ManagerController::class, 'GetManagerById']);
     // Manage Balance
+    Route::get('/get-balance', [ManageWalletAccount::class, 'VerifyBalance']);
     // Route::post('/add-balance', [ManageWalletAccount::class, 'ManageAddBalance']);
 });

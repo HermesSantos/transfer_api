@@ -24,7 +24,7 @@ class ManageWalletAccount extends Controller
     public function UserTransfer(Request $request)
     {
         $data = $request->all();
-        $has_balance = $this->VerifyBalance($data['owner_id'], self::$user_role);
+        $has_balance = $this->UserVerifyBalance($data['owner_id'], self::$user_role);
         if ($has_balance) {
             // subtract from wallet owner
             $balance = DB::table('wallets')->where('user_id', $data['owner_id'])->select('balance')->first();
@@ -40,7 +40,13 @@ class ManageWalletAccount extends Controller
             }
         }
     }
-    private function VerifyBalance($id, $role): bool
+    public function UserGetBalance(Request $request){
+        $data = $request->all();
+        $balance = DB::table('wallets')->select('balance')->where('wallet_code', $data['wallet_code'])->first();
+        return response()->json($balance);
+    }
+    
+    private function UserVerifyBalance($id, $role): bool
     {
         if ($role == 1) {
             $balance = DB::table('wallets')->where('user_id', $id)->select('balance')->first();
